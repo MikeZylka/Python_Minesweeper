@@ -14,6 +14,7 @@ root.geometry(f'{settings.WIDTH}x{settings.HEIGHT}')
 root.title("Minesweeper")
 root.resizable(False, False)
 
+#region Frame Creation in Window
 top_frame = Frame(
     root, 
     bg='black', # Will be changed later
@@ -37,9 +38,17 @@ center_frame = Frame(
     height=utils.height_prct(75)
 )
 center_frame.place(x=utils.width_prct(25), y=utils.height_prct(25))
+#endregion
 
-c1 = Cell()
-
+#region Create Grid
+for x in range(settings.GRID_SIZE):
+    for y in range(settings.GRID_SIZE):
+        c = Cell()
+        c.create_btn_object(center_frame)
+        c.cell_button_object.grid(
+            column=x, row=y
+        )
+#endregion
 
 # Run the Window
 root.mainloop()
