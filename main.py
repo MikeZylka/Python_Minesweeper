@@ -50,8 +50,9 @@ for x in range(settings.GRID_SIZE):
         )
 #endregion
 
-
-print(Cell.all)
+#region Randomize Mines
+Cell.randomize_mines()
+#endregion
 
 # Run the Window
 root.mainloop()
