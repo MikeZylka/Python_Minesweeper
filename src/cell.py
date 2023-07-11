@@ -1,9 +1,11 @@
-from tkinter import Button
+from tkinter import Button, Label
 import settings
 import random
 
 class Cell:
     all = []
+    cell_count_label_object = None
+    #region magic methods override 
     def __init__(self, x, y,  is_mine=False):
         self.is_mine = is_mine
         self.cell_button_object = None
@@ -16,6 +18,9 @@ class Cell:
     def __repr__(self):
         return f"Cell({self.x}, {self.y})"
 
+    #endregion
+
+    #region tkinter object instantiation
     def create_btn_object(self, location):
         btn = Button(
             location,
@@ -27,6 +32,19 @@ class Cell:
         btn.bind('<Button-3>', self.right_click_actions)
         self.cell_button_object = btn
 
+    @staticmethod
+    def create_cell_count_label(location):
+        lbl = Label(
+            location,
+            bg='black',
+            fg='white',
+            text=f"Cells Left: {settings.CELL_COUNT}",
+            font=("", 25)
+        )
+        Cell.cell_count_label_object = lbl
+    #endregion 
+    
+    #region left and right click functions
     def left_click_actions(self, event):
         if self.is_mine:
             self.show_mine()
@@ -39,6 +57,7 @@ class Cell:
     def right_click_actions(self, event):
         print(event)
         print("I am right clicked!")
+    #endregion
 
     def get_cell_by_axis(self, x,y):
         for cell in Cell.all:
@@ -75,6 +94,8 @@ class Cell:
 
     def show_cell(self):
         self.cell_button_object.configure(text=self.surrounding_cells_mines_length)
+        if Cell.cell_count_label_object:
+            Cell.cell_count_label_object.configure(text='Changed!')
 
     @staticmethod
     def randomize_mines():
