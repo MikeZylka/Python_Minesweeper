@@ -31,6 +31,9 @@ class Cell:
         if self.is_mine:
             self.show_mine()
         else:
+            if self.surrounding_cells_mines_length == 0:
+                for cell_obj in self.surrounding_cells:
+                    cell_obj.show_cell()
             self.show_cell()
 
     def right_click_actions(self, event):
