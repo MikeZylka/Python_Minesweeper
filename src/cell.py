@@ -9,6 +9,7 @@ class Cell:
     #region magic methods override 
     def __init__(self, x, y,  is_mine=False):
         self.is_mine = is_mine
+        self.is_open = False
         self.cell_button_object = None
         self.x = x
         self.y = y
@@ -94,11 +95,14 @@ class Cell:
         self.cell_button_object.configure(bg='red')
 
     def show_cell(self):
-        Cell.cell_count -= 1
-        self.cell_button_object.configure(text=self.surrounding_cells_mines_length)
-        if Cell.cell_count_label_object:
-            Cell.cell_count_label_object.configure(text=f'Cells Left: {Cell.cell_count}')
-
+        if not self.is_open:
+            Cell.cell_count -= 1
+            self.cell_button_object.configure(text=self.surrounding_cells_mines_length)
+            if Cell.cell_count_label_object:
+                Cell.cell_count_label_object.configure(text=f'Cells Left: {Cell.cell_count}')
+        
+        # Mark the cell as open
+        self.is_open = True
     @staticmethod
     def randomize_mines():
         picked_cells = random.sample(
