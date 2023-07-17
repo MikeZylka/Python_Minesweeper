@@ -1,6 +1,8 @@
 from tkinter import Button, Label
 import settings
 import random
+import ctypes
+import sys
 
 class Cell:
     all = []
@@ -102,6 +104,8 @@ class Cell:
 
     def show_mine(self):
         self.cell_button_object.configure(bg='red')
+        ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine', 'Game Over', 0)
+        sys.exit()
 
     def show_cell(self):
         if not self.is_open:
