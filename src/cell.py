@@ -58,6 +58,14 @@ class Cell:
                 for cell_obj in self.surrounding_cells:
                     cell_obj.show_cell()
             self.show_cell()
+            # Check to see if player wins
+            if Cell.cell_count == settings.MINES_COUNT:
+                ctypes.windll.user32.MessageBoxW(0, 'Congrats! You Won!', 'Game Over', 0)
+                sys.exit()
+        
+        # Cancel Left and Right click events if cell is already opened:
+        self.cell_button_object.unbind('<Button-1>')
+        self.cell_button_object.unbind('<Button-3>')
 
     def right_click_actions(self, event):
         if not self.is_mine_candidate:
