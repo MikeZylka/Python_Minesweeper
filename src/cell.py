@@ -10,6 +10,7 @@ class Cell:
     def __init__(self, x, y,  is_mine=False):
         self.is_mine = is_mine
         self.is_open = False
+        self.is_mine_candidate = False
         self.cell_button_object = None
         self.x = x
         self.y = y
@@ -57,8 +58,16 @@ class Cell:
             self.show_cell()
 
     def right_click_actions(self, event):
-        print(event)
-        print("I am right clicked!")
+        if not self.is_mine_candidate:
+            self.cell_button_object.configure(
+                bg='orange'
+            )
+            self.is_mine_candidate = True
+        else:
+            self.cell_button_object.configure(
+                bg='SystemButtonFace'
+            )
+            self.is_mine_candidate = False
     #endregion
 
     def get_cell_by_axis(self, x,y):
