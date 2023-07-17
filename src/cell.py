@@ -110,10 +110,18 @@ class Cell:
     def show_cell(self):
         if not self.is_open:
             Cell.cell_count -= 1
+            # Set the cell to have a number representing the mines surrounding that cell
             self.cell_button_object.configure(text=self.surrounding_cells_mines_length)
+            
+            # Update the label cell count
             if Cell.cell_count_label_object:
                 Cell.cell_count_label_object.configure(text=f'Cells Left: {Cell.cell_count}')
-        
+            
+            # Set the background to be the default cell color
+            self.cell_button_object.configure(
+                bg='SystemButtonFace'
+            )
+            
         # Mark the cell as open
         self.is_open = True
     @staticmethod
