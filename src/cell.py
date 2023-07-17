@@ -4,6 +4,7 @@ import random
 
 class Cell:
     all = []
+    cell_count = settings.CELL_COUNT
     cell_count_label_object = None
     #region magic methods override 
     def __init__(self, x, y,  is_mine=False):
@@ -38,7 +39,7 @@ class Cell:
             location,
             bg='black',
             fg='white',
-            text=f"Cells Left: {settings.CELL_COUNT}",
+            text=f"Cells Left: {Cell.cell_count}",
             font=("", 25)
         )
         Cell.cell_count_label_object = lbl
@@ -93,9 +94,10 @@ class Cell:
         self.cell_button_object.configure(bg='red')
 
     def show_cell(self):
+        Cell.cell_count -= 1
         self.cell_button_object.configure(text=self.surrounding_cells_mines_length)
         if Cell.cell_count_label_object:
-            Cell.cell_count_label_object.configure(text='Changed!')
+            Cell.cell_count_label_object.configure(text=f'Cells Left: {Cell.cell_count}')
 
     @staticmethod
     def randomize_mines():
